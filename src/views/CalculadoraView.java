@@ -205,7 +205,13 @@ public class CalculadoraView {
     }
 
     double resultado = controller.realizarDivisao();
-    exibirResultado(resultado);
+
+    if (Double.isNaN(resultado)) {
+      System.out.println("Não pode dividir por 0!");
+    } else {
+      exibirResultado(resultado);
+    }
+
     controller.reiniciarCalculadora();
   }
 

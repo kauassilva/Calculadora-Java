@@ -69,7 +69,7 @@ public class CalculadoraModel {
       if (numeros.get(i) != 0) {
         resultado /= numeros.get(i);
       } else {
-        throw new ArithmeticException("Divisão por zero!");
+        return Double.NaN;
       }
     }
     return resultado;
