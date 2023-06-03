@@ -221,6 +221,13 @@ public class CalculadoraView {
     }
   }
 
+  /*
+   * Solicita ao usuário que digite um número e realiza a validação da entrada para
+   * garantir que seja um número válido. Ele continua solicitando a entrada até que
+   * o usuário forneça um número válido, exibindo uma mensagem de erro caso
+   * contrário. O número válido é convertido para o tipo 'double' e retornado pelo
+   * método.
+   */
   private double lerNumero() {
     double numero = 0;
     boolean entradaValida = false;
@@ -229,6 +236,7 @@ public class CalculadoraView {
       System.out.print("Digite um número: ");
       String input = sc.next();
 
+      // Verifica se a entrada corresponde a um número válido utilizando expressão regular
       if (input.matches("-?\\d+(\\.\\d+)?")) {
         numero = Double.parseDouble(input);
         entradaValida = true;
