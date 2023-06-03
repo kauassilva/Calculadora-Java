@@ -11,6 +11,13 @@ public class CalculadoraView {
   private Scanner sc;
   private CalculadoraController controller;
 
+  // Constantes para as opções do menu
+  private static final int OPCAO_SOMAR = 1;
+  private static final int OPCAO_SUBTRAIR = 2;
+  private static final int OPCAO_MULTIPLICAR = 3;
+  private static final int OPCAO_DIVIDIR = 4;
+  private static final int OPCAO_SAIR = 5;
+
   public CalculadoraView() {
     sc = new Scanner(System.in);
   }
@@ -31,11 +38,11 @@ public class CalculadoraView {
     while (!sair) {
       System.out.println();
       System.out.println("========== Calculadora ==========");
-      System.out.println("| 1. Somar números              |");
-      System.out.println("| 2. Subtrair números           |");
-      System.out.println("| 3. Multiplicar números        |");
-      System.out.println("| 4. Dividir números            |");
-      System.out.println("| 5. Sair                       |");
+      System.out.println("| "+OPCAO_SOMAR+". Somar números              |");
+      System.out.println("| "+OPCAO_SUBTRAIR+". Subtrair números           |");
+      System.out.println("| "+OPCAO_MULTIPLICAR+". Multiplicar números        |");
+      System.out.println("| "+OPCAO_DIVIDIR+". Dividir números            |");
+      System.out.println("| "+OPCAO_SAIR+". Sair                       |");
       System.out.println("+-------------------------------+");
       System.out.println();
       System.out.print("Digite uma opção: ");
@@ -46,19 +53,19 @@ public class CalculadoraView {
         System.out.println();
   
         switch (opcao) {
-          case 1:
+          case OPCAO_SOMAR:
             realizarSoma();
             break;
-          case 2:
+          case OPCAO_SUBTRAIR:
             realizarSubtracao();
             break;
-          case 3:
+          case OPCAO_MULTIPLICAR:
             realizarMultiplicacao();
             break;
-          case 4:
+          case OPCAO_DIVIDIR:
             realizarDivisao();
             break;
-          case 5:
+          case OPCAO_SAIR:
             sair = true;
             break;
           default: 
@@ -82,26 +89,25 @@ public class CalculadoraView {
     boolean continuar = true;
     System.out.println("===== Soma de Números =====");
 
-    while (continuar) {
+    do {
       BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
+      String resposta;
 
-      boolean respostaValida = false;
-
-      while (!respostaValida) {
+      do {
         System.out.print("Deseja adicionar outro número? (S/N): ");
-        String resposta = sc.next();
+        resposta = sc.next();
         
         if (resposta.equalsIgnoreCase("S")) {
-          respostaValida = true;
+          break;
         } else if (resposta.equalsIgnoreCase("N")) {
-          respostaValida = true;
           continuar = false;
+          break;
         } else {
           System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
-      }
-    }
+      } while (true);
+    } while (continuar);
 
     BigDecimal resultado = controller.realizarSoma();
     System.out.println("\n===== Resultado da Soma =====");
@@ -119,26 +125,26 @@ public class CalculadoraView {
     boolean continuar = true;
     System.out.println("===== Subtração de Números =====");
 
-    while (continuar) {
+    do {
       BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
+      String resposta;
 
-      boolean respostaValida = false;
-
-      while (!respostaValida) {
+      
+      do {
         System.out.print("Deseja adicionar outro número? (S/N): ");
-        String resposta = sc.next();
+        resposta = sc.next();
 
         if (resposta.equalsIgnoreCase("S")) {
-          respostaValida = true;
+          break;
         } else if (resposta.equalsIgnoreCase("N")) {
-          respostaValida = true;
           continuar = false;
+          break;
         } else {
           System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
-      }
-    }
+      } while (true);
+    } while (continuar);
 
     BigDecimal resultado = controller.realizarSubtracao();
     System.out.println("\n===== Resultado da Subtração =====");
@@ -156,26 +162,25 @@ public class CalculadoraView {
     boolean continuar = true;
     System.out.println("===== Multiplicação de Números =====");
 
-    while (continuar) {
+    do {
       BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
+      String resposta;
 
-      boolean respostaValida = false;
-
-      while (!respostaValida) {
+      do {
         System.out.print("Deseja adicionar outro número? (S/N): ");
-        String resposta = sc.next();
+        resposta = sc.next();
         
         if (resposta.equalsIgnoreCase("S")) {
-          respostaValida = true;
+          break;
         } else if (resposta.equalsIgnoreCase("N")) {
-          respostaValida = true;
           continuar = false;
+          break;
         } else {
           System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
-      }
-    }
+      } while (true);
+    } while (continuar);
 
     BigDecimal resultado = controller.realizarMultiplicacao();
     System.out.println("\n===== Resultado da Multiplicação =====");
@@ -193,26 +198,25 @@ public class CalculadoraView {
     boolean continuar = true;
     System.out.println("===== Divisão de Números =====");
 
-    while (continuar) {
+    do {
       BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
+      String resposta;
 
-      boolean respostaValida = false;
-
-      while (!respostaValida) {
+      do {
         System.out.print("Deseja adicionar outro número? (S/N): ");
-        String resposta = sc.next();
+        resposta = sc.next();
 
         if (resposta.equalsIgnoreCase("S")) {
-          respostaValida = true;
+          break;
         } else if (resposta.equalsIgnoreCase("N")) {
-          respostaValida = true;
           continuar = false;
+          break;
         } else {
           System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
-      }
-    }
+      } while (true);
+    } while (continuar);
 
     BigDecimal resultado = controller.realizarDivisao();
     System.out.println("\n===== Resultado da Divisão =====");
@@ -257,17 +261,21 @@ public class CalculadoraView {
 
       // Substitui vírgula por ponto
       input = input.replace(",",".");
-
+      
       // Verifica se a entrada corresponde a um número válido utilizando expressão regular
-      if (input.matches("-?\\d+(\\.\\d+)?")) {
+      if (validarEntrada(input)) {
         numero = new BigDecimal(input);
         entradaValida = true;
       } else {
         System.out.println("Erro: Entrada inválida! Digite um número válido.");
       }
     }
-
+    
     return numero;
+  }
+  
+  private boolean validarEntrada(String entrada) {
+    return entrada.matches("-?\\d+(\\.\\d+)?");
   }
   
 }
