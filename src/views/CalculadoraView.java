@@ -1,5 +1,6 @@
 package views;
 
+import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -79,7 +80,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      double num = lerNumero();
+      BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -99,7 +100,7 @@ public class CalculadoraView {
       }
     }
 
-    double resultado = controller.realizarSoma();
+    BigDecimal resultado = controller.realizarSoma();
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -114,7 +115,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      double num = lerNumero();
+      BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -134,7 +135,7 @@ public class CalculadoraView {
       }
     }
 
-    double resultado = controller.realizarSubtracao();
+    BigDecimal resultado = controller.realizarSubtracao();
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -149,14 +150,14 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      double num = lerNumero();
+      BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
 
       while (!respostaValida) {
         System.out.print("Deseja adicionar outro número? (S/N): ");
-        String resposta =sc.next();
+        String resposta = sc.next();
         
         if (resposta.equalsIgnoreCase("S")) {
           respostaValida = true;
@@ -169,7 +170,7 @@ public class CalculadoraView {
       }
     }
 
-    double resultado = controller.realizarMultiplicacao();
+    BigDecimal resultado = controller.realizarMultiplicacao();
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -184,7 +185,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      double num = lerNumero();
+      BigDecimal num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -204,8 +205,14 @@ public class CalculadoraView {
       }
     }
 
-    double resultado = controller.realizarDivisao();
-    exibirResultado(resultado);
+    BigDecimal resultado = controller.realizarDivisao();
+
+    if (resultado.compareTo(BigDecimal.ZERO) == 0) {
+      System.out.println("Não pode dividir por 0!");
+    } else {
+      exibirResultado(resultado);
+    }
+
     controller.reiniciarCalculadora();
   }
 
@@ -213,12 +220,8 @@ public class CalculadoraView {
    * Exibe o resultado da operação realizada. Se o resultado for um número inteiro,
    * ele exibe sem o ponto decimal ".0".
    */
-  private void exibirResultado(double resultado) {
-    if (resultado % 1 == 0) {
-      System.out.println("Resultado: "+ (int) resultado);
-    } else {
-      System.out.println("Resultado: "+resultado);
-    }
+  private void exibirResultado(BigDecimal resultado) {
+    System.out.println("Resultado: "+resultado);
   }
 
   /*
@@ -228,17 +231,20 @@ public class CalculadoraView {
    * contrário. O número válido é convertido para o tipo 'double' e retornado pelo
    * método.
    */
-  private double lerNumero() {
-    double numero = 0;
+  private BigDecimal lerNumero() {
+    BigDecimal numero = BigDecimal.ZERO;
     boolean entradaValida = false;
 
     while (!entradaValida) {
       System.out.print("Digite um número: ");
       String input = sc.next();
 
+      // Substitui vírgula por ponto
+      input = input.replace(",",".");
+
       // Verifica se a entrada corresponde a um número válido utilizando expressão regular
       if (input.matches("-?\\d+(\\.\\d+)?")) {
-        numero = Double.parseDouble(input);
+        numero = new BigDecimal(input);
         entradaValida = true;
       } else {
         System.out.println("Entrada inválida! Digite um número válido.");

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.math.BigDecimal;
+
 import models.CalculadoraModel;
 
 public class CalculadoraController {
@@ -14,7 +16,7 @@ public class CalculadoraController {
    * Adiciona um número ao modelo da calculadora. Ele chama o método
    * 'adicionarNumero()' do objeto 'CalculadoraModel'.
    */
-  public void adicionarNumero(double numero) {
+  public void adicionarNumero(BigDecimal numero) {
     model.adicionarNumero(numero);
   }
 
@@ -22,7 +24,7 @@ public class CalculadoraController {
    * Realiza a operação de soma no modelo da calculadora e retorna o resultado. Ele
    * chama o método 'realizarSoma()' do objeto 'CalculadoraModel'.
    */
-  public double realizarSoma() {
+  public BigDecimal realizarSoma() {
     return model.realizarSoma();
   }
 
@@ -30,7 +32,7 @@ public class CalculadoraController {
    * Realiza a operação de subtração no modelo da calculadora e retorna o resultado.
    * Ele chama o método 'realizarSutracao()' do objeto 'CalculadoraModel'.
    */
-  public double realizarSubtracao() {
+  public BigDecimal realizarSubtracao() {
     return model.realizarSubtracao();
   }
 
@@ -39,7 +41,7 @@ public class CalculadoraController {
    * resultado. Ele chama o método 'realizarMultiplicacao()' do objeto
    * 'CalculadoraModel'.
    */
-  public double realizarMultiplicacao() {
+  public BigDecimal realizarMultiplicacao() {
     return model.realizarMultiplicacao();
   }
 
@@ -47,7 +49,7 @@ public class CalculadoraController {
    * Realiza a operação de divisão no modelo da calculadora e retorna o resultado.
    * Ele chama o método 'realizarDivisao()' do objeto 'CalculadoraModel'.
    */
-  public double realizarDivisao() {
+  public BigDecimal realizarDivisao() {
     return model.realizarDivisao();
   }
 
