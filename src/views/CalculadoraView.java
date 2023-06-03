@@ -26,9 +26,9 @@ public class CalculadoraView {
    */
   public void exibirMenu() {
     boolean sair = false;
-    System.out.println();
     
     while (!sair) {
+      System.out.println();
       System.out.println("========== Menu ==========");
       System.out.println("1. Somar números");
       System.out.println("2. Subtrair números");
@@ -40,6 +40,7 @@ public class CalculadoraView {
       try {
         int opcao = sc.nextInt();
         sc.nextLine(); // Limpar o buffer do scanner
+        System.out.println();
   
         switch (opcao) {
           case 1:
@@ -58,10 +59,9 @@ public class CalculadoraView {
             sair = true;
             break;
           default: 
-            System.out.println("\nOpção inválida! Tente novamente.");
+            System.out.println("Opção inválida! Tente novamente.\n");
         }
   
-        System.out.println();
       } catch (InputMismatchException e) {
         System.out.println("\nOpção inválida! Tente novamente.\n");
         sc.nextLine(); // Limpar o buffer do scanner
@@ -79,8 +79,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      System.out.print("Digite um número: ");
-      double num = sc.nextDouble();
+      double num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -115,8 +114,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      System.out.print("Digite um número: ");
-      double num = sc.nextDouble();
+      double num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -151,8 +149,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      System.out.print("Digite um número: ");
-      double num = sc.nextDouble();
+      double num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -187,8 +184,7 @@ public class CalculadoraView {
     boolean continuar = true;
 
     while (continuar) {
-      System.out.print("Digite um número: ");
-      double num = sc.nextDouble();
+      double num = lerNumero();
       controller.adicionarNumero(num);
 
       boolean respostaValida = false;
@@ -223,6 +219,33 @@ public class CalculadoraView {
     } else {
       System.out.println("Resultado: "+resultado);
     }
+  }
+
+  /*
+   * Solicita ao usuário que digite um número e realiza a validação da entrada para
+   * garantir que seja um número válido. Ele continua solicitando a entrada até que
+   * o usuário forneça um número válido, exibindo uma mensagem de erro caso
+   * contrário. O número válido é convertido para o tipo 'double' e retornado pelo
+   * método.
+   */
+  private double lerNumero() {
+    double numero = 0;
+    boolean entradaValida = false;
+
+    while (!entradaValida) {
+      System.out.print("Digite um número: ");
+      String input = sc.next();
+
+      // Verifica se a entrada corresponde a um número válido utilizando expressão regular
+      if (input.matches("-?\\d+(\\.\\d+)?")) {
+        numero = Double.parseDouble(input);
+        entradaValida = true;
+      } else {
+        System.out.println("Entrada inválida! Digite um número válido.");
+      }
+    }
+
+    return numero;
   }
   
 }
