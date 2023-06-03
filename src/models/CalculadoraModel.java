@@ -1,11 +1,13 @@
 package models;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CalculadoraModel {
 
-  private List<Double> numeros;
+  private List<BigDecimal> numeros;
 
   public CalculadoraModel() {
     numeros = new ArrayList<>(); 
@@ -15,7 +17,7 @@ public class CalculadoraModel {
    * Adiciona o número à lista de números da calculadora. Ele simplesmente adiciona
    * o número à lista 'numeros' usando o método 'add()'.
    */
-  public void adicionarNumero(double numero) {
+  public void adicionarNumero(BigDecimal numero) {
     numeros.add(numero);
   }
 
@@ -23,10 +25,10 @@ public class CalculadoraModel {
    * Itero sobre a lista de números e realiza a operação de soma, acumulando o
    * resultado na variável 'resultado'. Ele retorna o resultado final da soma.
    */
-  public double realizarSoma() {
-    double resultado = 0;
-    for (double num : numeros) {
-      resultado += num;
+  public BigDecimal realizarSoma() {
+    BigDecimal resultado = BigDecimal.ZERO;
+    for (BigDecimal num : numeros) {
+      resultado = resultado.add(num);
     }
     return resultado;
   }
@@ -36,10 +38,10 @@ public class CalculadoraModel {
    * número da lista e itera sobre os demais números, subtraindo-os da variável
    * 'resulado'. Ele retorna o resultado final da subtração.
    */
-  public double realizarSubtracao() {
-    double resultado = numeros.get(0);
+  public BigDecimal realizarSubtracao() {
+    BigDecimal resultado = numeros.get(0);
     for (int i = 1; i < numeros.size(); i++) {
-      resultado -= numeros.get(i);
+      resultado = resultado.subtract(numeros.get(i));
     }
     return resultado;
   }
@@ -49,10 +51,10 @@ public class CalculadoraModel {
    * acumulando o resultado na variável 'resultado'. Ele retorna o resultado final
    * da multiplicação.
    */
-  public double realizarMultiplicacao() {
-    double resultado = 1;
-    for (double num : numeros) {
-      resultado *= num;
+  public BigDecimal realizarMultiplicacao() {
+    BigDecimal resultado = BigDecimal.ONE;
+    for (BigDecimal num : numeros) {
+      resultado = resultado.multiply(num);
     }
     return resultado;
   }
@@ -63,13 +65,13 @@ public class CalculadoraModel {
    * 'resultado'. Se os números após o primeiro número forem zero, uma exceção
    * 'ArithmeticException' é lançada. O método retorna o resultado final da divisão.
    */
-  public double realizarDivisao() {
-    double resultado = numeros.get(0);
+  public BigDecimal realizarDivisao() {
+    BigDecimal resultado = numeros.get(0);
     for (int i = 1; i < numeros.size(); i++) {
-      if (numeros.get(i) != 0) {
-        resultado /= numeros.get(i);
+      if (numeros.get(i).compareTo(BigDecimal.ZERO) != 0) {
+        resultado = resultado.divide(numeros.get(i), 30, RoundingMode.HALF_EVEN);
       } else {
-        return Double.NaN;
+        return BigDecimal.ZERO;
       }
     }
     return resultado;
