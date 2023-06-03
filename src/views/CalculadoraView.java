@@ -239,6 +239,9 @@ public class CalculadoraView {
       System.out.print("Digite um número: ");
       String input = sc.next();
 
+      // Substitui vírgula por ponto
+      input = input.replace(",",".");
+
       // Verifica se a entrada corresponde a um número válido utilizando expressão regular
       if (input.matches("-?\\d+(\\.\\d+)?")) {
         numero = new BigDecimal(input);
