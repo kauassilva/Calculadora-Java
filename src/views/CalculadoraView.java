@@ -30,12 +30,14 @@ public class CalculadoraView {
     
     while (!sair) {
       System.out.println();
-      System.out.println("========== Menu ==========");
-      System.out.println("1. Somar números");
-      System.out.println("2. Subtrair números");
-      System.out.println("3. Multiplicar números");
-      System.out.println("4. Dividir números");
-      System.out.println("5. Sair");
+      System.out.println("========== Calculadora ==========");
+      System.out.println("| 1. Somar números              |");
+      System.out.println("| 2. Subtrair números           |");
+      System.out.println("| 3. Multiplicar números        |");
+      System.out.println("| 4. Dividir números            |");
+      System.out.println("| 5. Sair                       |");
+      System.out.println("+-------------------------------+");
+      System.out.println();
       System.out.print("Digite uma opção: ");
 
       try {
@@ -60,11 +62,11 @@ public class CalculadoraView {
             sair = true;
             break;
           default: 
-            System.out.println("Opção inválida! Tente novamente.\n");
+            System.out.println("Erro: Opção inválida! Tente novamente.\n");
         }
   
       } catch (InputMismatchException e) {
-        System.out.println("\nOpção inválida! Tente novamente.\n");
+        System.out.println("\nErro: Opção inválida! Tente novamente.\n");
         sc.nextLine(); // Limpar o buffer do scanner
       }
     }
@@ -78,6 +80,7 @@ public class CalculadoraView {
    */
   private void realizarSoma() {
     boolean continuar = true;
+    System.out.println("===== Soma de Números =====");
 
     while (continuar) {
       BigDecimal num = lerNumero();
@@ -95,12 +98,13 @@ public class CalculadoraView {
           respostaValida = true;
           continuar = false;
         } else {
-          System.out.println("Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
+          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
       }
     }
 
     BigDecimal resultado = controller.realizarSoma();
+    System.out.println("\n===== Resultado da Soma =====");
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -113,6 +117,7 @@ public class CalculadoraView {
    */
   private void realizarSubtracao() {
     boolean continuar = true;
+    System.out.println("===== Subtração de Números =====");
 
     while (continuar) {
       BigDecimal num = lerNumero();
@@ -130,12 +135,13 @@ public class CalculadoraView {
           respostaValida = true;
           continuar = false;
         } else {
-          System.out.println("Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
+          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
       }
     }
 
     BigDecimal resultado = controller.realizarSubtracao();
+    System.out.println("\n===== Resultado da Subtração =====");
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -148,6 +154,7 @@ public class CalculadoraView {
    */
   private void realizarMultiplicacao() {
     boolean continuar = true;
+    System.out.println("===== Multiplicação de Números =====");
 
     while (continuar) {
       BigDecimal num = lerNumero();
@@ -165,12 +172,13 @@ public class CalculadoraView {
           respostaValida = true;
           continuar = false;
         } else {
-          System.out.println("Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
+          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
       }
     }
 
     BigDecimal resultado = controller.realizarMultiplicacao();
+    System.out.println("\n===== Resultado da Multiplicação =====");
     exibirResultado(resultado);
     controller.reiniciarCalculadora();
   }
@@ -183,6 +191,7 @@ public class CalculadoraView {
    */
   private void realizarDivisao() {
     boolean continuar = true;
+    System.out.println("===== Divisão de Números =====");
 
     while (continuar) {
       BigDecimal num = lerNumero();
@@ -200,15 +209,16 @@ public class CalculadoraView {
           respostaValida = true;
           continuar = false;
         } else {
-          System.out.println("Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
+          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
         }
       }
     }
 
     BigDecimal resultado = controller.realizarDivisao();
+    System.out.println("\n===== Resultado da Divisão =====");
 
     if (resultado.compareTo(BigDecimal.ZERO) == 0) {
-      System.out.println("Não pode dividir por 0!");
+      System.out.println("Erro: Não pode dividir por 0!");
     } else {
       exibirResultado(resultado);
     }
@@ -221,7 +231,13 @@ public class CalculadoraView {
    * ele exibe sem o ponto decimal ".0".
    */
   private void exibirResultado(BigDecimal resultado) {
-    System.out.println("Resultado: "+resultado);
+    BigDecimal resultadoSemZeros = resultado.stripTrailingZeros();
+
+    if (resultadoSemZeros.scale() <= 0) {
+      System.out.println("Resultado: "+resultadoSemZeros.toBigInteger());
+    } else {
+      System.out.println("Resultado: "+resultado);
+    }
   }
 
   /*
@@ -247,7 +263,7 @@ public class CalculadoraView {
         numero = new BigDecimal(input);
         entradaValida = true;
       } else {
-        System.out.println("Entrada inválida! Digite um número válido.");
+        System.out.println("Erro: Entrada inválida! Digite um número válido.");
       }
     }
 
