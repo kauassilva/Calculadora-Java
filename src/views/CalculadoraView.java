@@ -26,11 +26,15 @@ public class CalculadoraView {
     this.controller = controller;
   }
 
+
+
   /*
-   * Exibe um menu com opções para realizar diferentes operações matemáticas. Ele lê
-   * a opção selecionada pelo usuário e executa o método correspondente no
-   * controlador. Se o usuário fornecer uma opção inválida, uma mensagem de erro é
-   * exibida e o menu é mostrado novamente.
+   * exibirMenu()
+   * ==================================================
+   * Exibe um menu da calculadora em um loop contínuo até que o usuário escolha a
+   * opção de sair. Ele mostra as opções disponíveis para o usuário, lê a opção
+   * escolhida pelo usuário, executa a operação correspondente com base na opção
+   * selecionada e lida com possíveis erros de entrada inválida.
    */
   public void exibirMenu() {
     boolean sair = false;
@@ -79,124 +83,22 @@ public class CalculadoraView {
     }
   }
 
-  /*
-   * Este método permite ao usuário números para realizar uma operação de soma. Ele
-   * solicita os números e verifica se o usuário deseja adicionar mais números. O
-   * método 'realizarSoma()' do controlador para calcular a soma dos números
-   * inseridos e exibe o resultado
-   */
-  private void realizarSoma() {
-    boolean continuar = true;
-    System.out.println("===== Soma de Números =====");
 
-    do {
-      BigDecimal num = lerNumero();
-      controller.adicionarNumero(num);
-      String resposta;
-
-      do {
-        System.out.print("Deseja adicionar outro número? (S/N): ");
-        resposta = sc.next();
-        
-        if (resposta.equalsIgnoreCase("S")) {
-          break;
-        } else if (resposta.equalsIgnoreCase("N")) {
-          continuar = false;
-          break;
-        } else {
-          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
-        }
-      } while (true);
-    } while (continuar);
-
-    BigDecimal resultado = controller.realizarSoma();
-    System.out.println("\n===== Resultado da Soma =====");
-    exibirResultado(resultado);
-    controller.reiniciarCalculadora();
-  }
 
   /*
-   * Este método permite ao usuário números para realizar uma operação de subtração.
-   * Ele solicita os números e verifica se o usuário deseja adicionar mais números.
-   * O método 'realizarSubtracao()' do controlador para calcular a subtração dos
-   * números inseridos e exibe o resultado.
+   * realizarOperacao(String nomeOperacao)
+   * ==================================================
+   * Realiza uma operação na calculadora com base no nome da operação fornecido. Ele
+   * exibe o cabeçalho da operação, lê os números de entrada do usuário e os
+   * adiciona ao controlador da calculadora. Em seguida, ele pergunta ao usuário se
+   * deseja adicionar outro número e continua o loop até que o usuário escolha
+   * parar. Após obter os números de entrada, o método chama o método apropriado no
+   * controlador para realizar a operação desejada. Em seguida, exibe o resultado da
+   * operação e reinicia a calculadora no controlador.
    */
-  private void realizarSubtracao() {
+  private void realizarOperacao(String nomeOperacao) {
     boolean continuar = true;
-    System.out.println("===== Subtração de Números =====");
-
-    do {
-      BigDecimal num = lerNumero();
-      controller.adicionarNumero(num);
-      String resposta;
-
-      
-      do {
-        System.out.print("Deseja adicionar outro número? (S/N): ");
-        resposta = sc.next();
-
-        if (resposta.equalsIgnoreCase("S")) {
-          break;
-        } else if (resposta.equalsIgnoreCase("N")) {
-          continuar = false;
-          break;
-        } else {
-          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
-        }
-      } while (true);
-    } while (continuar);
-
-    BigDecimal resultado = controller.realizarSubtracao();
-    System.out.println("\n===== Resultado da Subtração =====");
-    exibirResultado(resultado);
-    controller.reiniciarCalculadora();
-  }
-
-  /*
-   * Este método permite ao usuário números para realizar uma operação de
-   * multiplicação. Ele solicita os números e verifica se o usuário deseja adicionar
-   * mais números. O método 'realizarMultiplicacao()' do controlador para calcular a
-   * multiplicação dos números inseridos e exibe o resultado.
-   */
-  private void realizarMultiplicacao() {
-    boolean continuar = true;
-    System.out.println("===== Multiplicação de Números =====");
-
-    do {
-      BigDecimal num = lerNumero();
-      controller.adicionarNumero(num);
-      String resposta;
-
-      do {
-        System.out.print("Deseja adicionar outro número? (S/N): ");
-        resposta = sc.next();
-        
-        if (resposta.equalsIgnoreCase("S")) {
-          break;
-        } else if (resposta.equalsIgnoreCase("N")) {
-          continuar = false;
-          break;
-        } else {
-          System.out.println("Erro: Opção inválida! Digite 'S' para continuar ou 'N' para parar.");
-        }
-      } while (true);
-    } while (continuar);
-
-    BigDecimal resultado = controller.realizarMultiplicacao();
-    System.out.println("\n===== Resultado da Multiplicação =====");
-    exibirResultado(resultado);
-    controller.reiniciarCalculadora();
-  }
-
-  /*
-   * Este método permite ao usuário números para realizar uma operação de divisão.
-   * Ele solicita os números e verifica se o usuário deseja adicionar mais números.
-   * O método 'realizarDivisao()' do controlador para calcular a divisão dos
-   * números inseridos e exibe o resultado.
-   */
-  private void realizarDivisao() {
-    boolean continuar = true;
-    System.out.println("===== Divisão de Números =====");
+    System.out.println("===== "+nomeOperacao+" de Números =====");
 
     do {
       BigDecimal num = lerNumero();
@@ -218,21 +120,58 @@ public class CalculadoraView {
       } while (true);
     } while (continuar);
 
-    BigDecimal resultado = controller.realizarDivisao();
-    System.out.println("\n===== Resultado da Divisão =====");
+    BigDecimal resultado = null;
 
-    if (resultado.compareTo(BigDecimal.ZERO) == 0) {
-      System.out.println("Erro: Não pode dividir por 0!");
-    } else {
+    if (nomeOperacao.equalsIgnoreCase("Soma")) {
+      resultado = controller.realizarSoma();
+    } else if (nomeOperacao.equalsIgnoreCase("Subtração")) {
+      resultado = controller.realizarSubtracao();
+    } else if (nomeOperacao.equalsIgnoreCase("Multiplicação")) {
+      resultado = controller.realizarMultiplicacao();
+    } else if (nomeOperacao.equalsIgnoreCase("Divisão")) {
+      resultado = controller.realizarDivisao();
+    }
+
+    System.out.println("\n===== Resultado da "+nomeOperacao+" =====");
+    
+    if (resultado != null) {
       exibirResultado(resultado);
     }
 
     controller.reiniciarCalculadora();
   }
 
+
+
   /*
-   * Exibe o resultado da operação realizada. Se o resultado for um número inteiro,
-   * ele exibe sem o ponto decimal ".0".
+   * Esses métodos são responsáveis por chamar o método 
+   * 'realizarOperacao(String nomeOperacao)' com o nome da operação correspondente.
+   */
+  private void realizarSoma() {
+    realizarOperacao("Soma");
+  }
+
+  private void realizarSubtracao() {
+    realizarOperacao("Subtração");
+  }
+
+  private void realizarMultiplicacao() {
+    realizarOperacao("Multiplicação");
+  }
+
+  private void realizarDivisao() {
+    realizarOperacao("Divisão");
+  }
+
+
+  /*
+   * Exibe o resultado de uma operação realizada pela calculadora. Primeiro, remove
+   * os zeros à direita do resultado usando o método 'stripTrailingZeros()', criando
+   * um novo BigDecimal chamado 'resultadoSemZeros'. Em seguida, ele verifica se a
+   * escala do 'resultadoSemZeros' é menor ou igual a zero. Se for, isso significa
+   * que o resultado é um número inteiro, então ele é convertido em 'BigInteger'
+   * usando o método 'toBigInteger()' e é exibido como um número inteiro. Caso
+   * contrário, o resultado é exibido normalmente com um número decimal.
    */
   private void exibirResultado(BigDecimal resultado) {
     BigDecimal resultadoSemZeros = resultado.stripTrailingZeros();
@@ -244,12 +183,21 @@ public class CalculadoraView {
     }
   }
 
+
+
   /*
-   * Solicita ao usuário que digite um número e realiza a validação da entrada para
-   * garantir que seja um número válido. Ele continua solicitando a entrada até que
-   * o usuário forneça um número válido, exibindo uma mensagem de erro caso
-   * contrário. O número válido é convertido para o tipo 'double' e retornado pelo
-   * método.
+   * lerNumero()
+   * ==================================================
+   * Ler um número digitado pelo usuário. Ele inicializa uma variável 'numero' com o
+   * valor zero. Em seguida, entra em um loop enquanto a entrada não for válida.
+   * Dentro do loop, ele exibe a mensagem "Digite um número: " e lê a entrada do
+   * usuário usando o scanner. Em seguida, substitui qualquer ocorrência de vírgula
+   * por ponto, para garantir que o número seja lido corretamente. Em seguida, tenta
+   * converter a entrada em um objeto 'BigDecimal'. Se a conversão for bem-sucedida,
+   * a variável 'numero' é atualizada com o valor convertido e 'entradaValida' é
+   * definida como verdadeira, saindo do loop. Caso contrário, uma exceção
+   * 'NumberFormatException' é capturada, indicando que a entrada não é um número
+   * válido, e uma mensagem de erro é exibida. Por fim, retorna o número lido.
    */
   private BigDecimal lerNumero() {
     BigDecimal numero = BigDecimal.ZERO;
@@ -262,20 +210,16 @@ public class CalculadoraView {
       // Substitui vírgula por ponto
       input = input.replace(",",".");
       
-      // Verifica se a entrada corresponde a um número válido utilizando expressão regular
-      if (validarEntrada(input)) {
+      // Tenta converter a entrada em número
+      try {
         numero = new BigDecimal(input);
         entradaValida = true;
-      } else {
+      } catch (NumberFormatException e) {
         System.out.println("Erro: Entrada inválida! Digite um número válido.");
       }
     }
     
     return numero;
-  }
-  
-  private boolean validarEntrada(String entrada) {
-    return entrada.matches("-?\\d+(\\.\\d+)?");
   }
   
 }
